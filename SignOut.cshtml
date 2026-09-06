@@ -1,0 +1,49 @@
+@{
+    Layout = null;
+    ViewData["Title"] = "تایید خروج از سامانه — شرکت پالایش نفت آبادان";
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@ViewData["Title"]</title>
+  <link rel="stylesheet" href="~/assets/css/identity.css" asp-append-version="true">
+</head>
+<body class="aorc-light-bg">
+
+  <div class="aorc-ambient-glow aorc-ambient-glow-1"></div>
+  <div class="aorc-ambient-glow aorc-ambient-glow-2"></div>
+
+  <main class="aorc-logout-card-clean">
+    <div class="aorc-logout-icon-pill">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" x2="9" y1="12" y2="12"/>
+      </svg>
+    </div>
+
+    <h1 class="aorc-logout-title-clean">تایید خروج از سامانه یکپارچه</h1>
+    <p class="aorc-logout-desc-clean">
+      کاربر گرامی؛ آیا از خروج خود اطمینان دارید؟ با خروج از سامانه احراز هویت متمرکز، نشست کاری شما در <strong>تمامی سامانه‌های متصل به SSO</strong> خاتمه خواهد یافت.
+    </p>
+
+    <form id="aorcLogoutForm" asp-controller="Account" asp-action="LogOff" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+      @Html.AntiForgeryToken()
+      <button type="submit" class="aorc-btn-logout-danger" id="aorcLogoutConfirmBtn">
+        <span class="aorc-spinner"></span>
+        <span class="aorc-btn-text">خروج از کلیه سامانه‌ها</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" x2="9" y1="12" y2="12"/>
+        </svg>
+      </button>
+      <a href="javascript:history.back()" class="aorc-btn-logout-cancel">انصراف و بازگشت</a>
+    </form>
+  </main>
+
+  <script src="~/assets/js/identity.js" asp-append-version="true"></script>
+</body>
+</html>

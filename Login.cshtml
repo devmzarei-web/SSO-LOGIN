@@ -1,0 +1,147 @@
+@model OrchardCore.Users.ViewModels.LoginViewModel
+@{
+    Layout = null;
+    ViewData["Title"] = "سامانه ورود یکپارچه — شرکت پالایش نفت آبادان";
+}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@ViewData["Title"]</title>
+  <link rel="stylesheet" href="~/assets/css/identity.css" asp-append-version="true">
+</head>
+<body class="aorc-light-bg">
+
+  <div class="aorc-ambient-glow aorc-ambient-glow-1"></div>
+  <div class="aorc-ambient-glow aorc-ambient-glow-2"></div>
+
+  <main class="aorc-split-container">
+
+    <!-- Login Form -->
+    <section class="aorc-login-pane">
+      <div class="aorc-brand-header">
+        <div class="aorc-logo-wrap" title="شرکت پالایش نفت آبادان">
+          <img src="~/assets/img/refinery-logo.png" alt="شرکت پالایش نفت آبادان" class="aorc-logo-img">
+        </div>
+        <h1 class="aorc-company-name">شرکت پالایش نفت آبادان</h1>
+        <div class="aorc-system-title">سامانه ورود یکپارچه</div>
+      </div>
+
+      @if (!ViewData.ModelState.IsValid)
+      {
+          <div class="alert alert-danger p-2.5 mb-3 rounded-3" style="background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; font-size: 0.84rem; padding: 0.75rem; border-radius: 10px; margin-bottom: 1.25rem;" role="alert">
+              <div asp-validation-summary="All" class="text-danger m-0 list-unstyled"></div>
+          </div>
+      }
+
+      <form id="aorcLoginForm" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="aorc-form-group">
+          <label class="aorc-form-label" asp-for="UserName">نام کاربری</label>
+          <div class="aorc-input-wrapper">
+            <input asp-for="UserName" id="userNameInput" class="aorc-form-control" placeholder="نام کاربری یا شماره پرسنلی" required autocomplete="username" autofocus />
+            <span class="aorc-input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="aorc-form-group">
+          <label class="aorc-form-label" asp-for="Password">کلمه عبور</label>
+          <div class="aorc-input-wrapper">
+            <input asp-for="Password" type="password" id="passwordInput" class="aorc-form-control" placeholder="••••••••" required autocomplete="current-password" />
+            <span class="aorc-input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </span>
+            <button type="button" class="aorc-password-toggle" id="passwordToggleBtn" aria-label="نمایش کلمه عبور">
+              <svg id="iconEyeOpen" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg id="iconEyeClosed" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                <path d="m15 18-.722-3.25"/>
+                <path d="M2 8a10.645 10.645 0 0 0 20 0"/>
+                <path d="m20 15-1.726-2.05"/>
+                <path d="m4 15 1.726-2.05"/>
+                <path d="m9 18 .722-3.25"/>
+              </svg>
+            </button>
+          </div>
+          <div id="capsLockAlert" class="aorc-capslock-alert">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m18 15-6-6-6 6"/>
+            </svg>
+            <span>هشدار: کلید Caps Lock روشن است.</span>
+          </div>
+        </div>
+
+        <div class="aorc-form-options">
+          <label class="aorc-checkbox-label">
+            <input asp-for="RememberMe" type="checkbox" />
+            <span class="aorc-checkbox-custom"></span>
+            <span>مرا به خاطر بسپار</span>
+          </label>
+          <a href="#" class="aorc-link-support" onclick="alert('جهت بازیابی رمز عبور با پشتیبانی فناوری اطلاعات تماس حاصل فرمایید.'); return false;">
+            فراموشی رمز عبور؟
+          </a>
+        </div>
+
+        <button type="submit" class="aorc-btn-submit" id="aorcSubmitBtn">
+          <span class="aorc-spinner"></span>
+          <span class="aorc-btn-text">ورود به سامانه</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);">
+            <path d="M5 12h14"/>
+            <path d="m12 5 7 7-7 7"/>
+          </svg>
+        </button>
+      </form>
+    </section>
+
+    <!-- News Showcase -->
+    <aside class="aorc-showcase-pane">
+      <div class="aorc-sphere aorc-sphere-1"></div>
+      <div class="aorc-sphere aorc-sphere-2"></div>
+      <div class="aorc-sphere aorc-sphere-3"></div>
+
+      <div class="aorc-showcase-top">
+        <div class="aorc-news-pill">
+          <span class="aorc-news-pill-dot"></span>
+          <span>اطلاعیه‌ها و اخبار سازمانی</span>
+        </div>
+
+        <div class="aorc-top-left-actions">
+          <div class="aorc-slider-arrows">
+            <button type="button" class="aorc-arrow-btn" id="aorcPrevSlideBtn" aria-label="قبلی">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
+            </button>
+            <button type="button" class="aorc-arrow-btn" id="aorcNextSlideBtn" aria-label="بعدی">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="aorc-slider-track-container" id="aorcSliderTrack"></div>
+
+      <div class="aorc-showcase-footer">
+        <div class="aorc-slider-bullets" id="aorcSliderBullets"></div>
+      </div>
+    </aside>
+  </main>
+
+  <script src="~/assets/js/news-config.js" asp-append-version="true"></script>
+  <script src="~/assets/js/identity.js" asp-append-version="true"></script>
+</body>
+</html>

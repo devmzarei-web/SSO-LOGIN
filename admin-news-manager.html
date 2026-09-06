@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مدیریت اخبار و اطلاعیه‌های ورود یکپارچه — پالایشگاه نفت آبادان</title>
+  <link rel="stylesheet" href="assets/css/identity.css">
+  <style>
+    @font-face {
+      font-family: 'IRANSansX';
+      src: url('assets/fonts/IRANSansX/IRANSansX-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'IRANSansX';
+      src: url('assets/fonts/IRANSansX/IRANSansX-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'IRANSansX';
+      src: url('assets/fonts/IRANSansX/IRANSansX-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'IRANSansX';
+      src: url('assets/fonts/IRANSansX/IRANSansX-ExtraBold.woff2') format('woff2');
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *, *::before, *::after, html, body, button, input, select, textarea {
+      font-family: 'IRANSansX', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    body.admin-body {
+      background: #f1f5f9;
+      min-height: 100vh;
+      color: #1e293b;
+      padding: 2rem 1.5rem;
+    }
+
+    .admin-header {
+      max-width: 1200px;
+      margin: 0 auto 2rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #ffffff;
+      padding: 1.25rem 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .admin-brand img {
+      height: 58px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .admin-brand-text h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 0.25rem 0;
+    }
+
+    .admin-brand-text p {
+      font-size: 0.84rem;
+      color: #64748b;
+      margin: 0;
+    }
+
+    .admin-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .admin-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.25rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .admin-btn-primary {
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    }
+
+    .admin-btn-primary:hover {
+      background: #0369a1;
+      transform: translateY(-1px);
+    }
+
+    .admin-btn-secondary {
+      background: #ffffff;
+      color: #334155;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .admin-btn-secondary:hover {
+      background: #f8fafc;
+      border-color: #94a3b8;
+    }
+
+    .admin-btn-success {
+      background: #059669;
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+    }
+
+    .admin-btn-success:hover {
+      background: #047857;
+      transform: translateY(-1px);
+    }
+
+    .admin-main-layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .admin-main-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .admin-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 1.75rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+      border: 1px solid #e2e8f0;
+      margin-bottom: 1.75rem;
+    }
+
+    .admin-card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .slide-item-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .slide-item-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+    }
+
+    .slide-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .slide-item-number {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #0284c7;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .slide-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .slide-mini-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      color: #334155;
+      transition: all 0.15s ease;
+      line-height: 1.4;
+    }
+
+    .slide-mini-btn:hover {
+      background: #f1f5f9;
+      color: #0f172a;
+      border-color: #94a3b8;
+    }
+
+    .slide-mini-btn.danger {
+      color: #dc2626;
+      border-color: #fecaca;
+      background: #fef2f2;
+    }
+
+    .slide-mini-btn.danger:hover {
+      background: #fee2e2;
+      border-color: #f87171;
+    }
+
+    .admin-form-group {
+      margin-bottom: 1rem;
+    }
+
+    .admin-form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 0.35rem;
+    }
+
+    .admin-input, .admin-textarea, .admin-select {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.88rem;
+      color: #1e293b;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .admin-input:focus, .admin-textarea:focus, .admin-select:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+    }
+
+    .admin-textarea {
+      resize: vertical;
+      min-height: 70px;
+      line-height: 1.6;
+    }
+
+    .admin-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .img-preview-box {
+      margin-top: 0.5rem;
+      height: 110px;
+      border-radius: 8px;
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+
+    .img-preview-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      background: #0f172a;
+      color: #ffffff;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-msg.success {
+      background: #065f46;
+      border: 1px solid #10b981;
+    }
+
+    .toast-msg.error {
+      background: #991b1b;
+      border: 1px solid #ef4444;
+    }
+
+    .live-preview-container {
+      position: sticky;
+      top: 2rem;
+    }
+
+    .live-slide-card {
+      background: linear-gradient(135deg, #0284c7 0%, #082f49 100%);
+      border-radius: 16px;
+      padding: 1.5rem;
+      color: #ffffff;
+      box-shadow: 0 15px 35px -5px rgba(2, 132, 199, 0.4);
+    }
+
+    .live-slide-img-box {
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 10px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .live-slide-img-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .live-slide-tag {
+      display: inline-block;
+      padding: 0.2rem 0.65rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .live-slide-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .live-slide-desc {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="admin-brand">
+      <img src="assets/img/refinery-logo.png" alt="پالایشگاه نفت آبادان">
+      <div class="admin-brand-text">
+        <h1>سامانه مدیریت اخبار و اطلاعیه‌های ورود یکپارچه (SSO)</h1>
+        <p>شرکت پالایش نفت آبادان — ویرایشگر مستقیم فایل‌های ایستا</p>
+      </div>
+    </div>
+    <div class="admin-header-actions">
+      <button type="button" class="admin-btn admin-btn-success" id="btnSaveSystem" title="ذخیره آنی در سامانه و اعمال فوری در تمامی تب‌های صفحه لاگین">
+        <span>💾 ذخیره و اعمال در سامانه</span>
+      </button>
+      <button type="button" class="admin-btn admin-btn-primary" id="btnDownloadConfig" title="دانلود یک نسخه از فایل news-config.js برای استقرار در سرور">
+        <span>📥 دانلود فایل JS</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main layout -->
+  <main class="admin-main-layout">
+    
+    <!-- Left column: Editor list -->
+    <section>
+      <div class="admin-card">
+        <div class="admin-card-title">
+          <span>لیست اسلایدها و اطلاعیه‌ها (<span id="slideCountBadge">0</span> اسلاید)</span>
+          <button type="button" class="admin-btn admin-btn-primary" id="btnAddSlide" style="padding: 0.45rem 1rem; font-size: 0.8rem;">
+            <span>➕ افزودن اسلاید جدید</span>
+          </button>
+        </div>
+
+        <div id="slidesContainer">
+          <!-- Slide item editors injected here -->
+        </div>
+
+        <button type="button" class="admin-btn admin-btn-secondary" id="btnAddSlideBottom" style="width: 100%; border-style: dashed; justify-content: center; margin-top: 0.5rem;">
+          <span>+ افزودن اسلاید جدید دیگر</span>
+        </button>
+      </div>
+
+      <!-- Settings card -->
+      <div class="admin-card">
+        <div class="admin-card-title">
+          <span>تنظیمات اسلایدر و ابزارهای توسعه</span>
+        </div>
+        <div class="admin-grid-2">
+          <div class="admin-form-group">
+            <label class="admin-form-label">تاخیر چرخش خودکار اسلایدها (ثانیه)</label>
+            <input type="number" id="autoSlideDelayInput" class="admin-input" min="2" max="30" value="5" step="1">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-form-label">کپی سریع کدهای JavaScript</label>
+            <button type="button" class="admin-btn admin-btn-secondary" id="btnCopyCode" style="width:100%; justify-content:center;">
+              <span>📋 کپی کدهای news-config.js</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right column: Live preview -->
+    <aside>
+      <div class="live-preview-container">
+        <div class="admin-card">
+          <div class="admin-card-title" style="margin-bottom: 1rem;">
+            <span>پیش‌نمایش زنده در صفحه ورود</span>
+            <span style="font-size: 0.78rem; color: #64748b;" id="previewSlideIndicator">اسلاید ۱</span>
+          </div>
+
+          <div class="live-slide-card" id="livePreviewBox">
+            <div class="live-slide-img-box">
+              <img id="liveImg" src="assets/img/2.jpg" alt="تصویر پیش‌نمایش" onerror="this.src='assets/img/2.jpg'">
+            </div>
+            <span class="live-slide-tag" id="liveTag">طرح‌های توسعه</span>
+            <div class="live-slide-title" id="liveTitle">عنوان پیش‌نمایش اسلاید</div>
+            <div class="live-slide-desc" id="liveDesc">متن توضیحات این اسلاید به صورت زنده در این کادر نمایش داده می‌شود.</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Toast notification -->
+  <div class="toast-msg" id="adminToast">
+    <span id="toastIcon">✔</span>
+    <span id="toastText">عملیات با موفقیت انجام شد.</span>
+  </div>
+
+  <!-- Load current configuration file -->
+  <script src="assets/js/news-config.js"></script>
+
+  <!-- Admin Manager Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const DEFAULT_REFINERY_NEWS = [
+        {
+          id: 1,
+          tag: "طرح‌های توسعه و تولید",
+          title: "بررسی روند تولید و طرح‌های توسعه‌ای پالایش نفت آبادان",
+          desc: "معاون وزیر نفت و مدیرعامل شرکت ملی پالایش و پخش فرآورده‌های نفتی ایران در سفر به آبادان، ضمن برگزاری نشست با مدیران و بازدید از بخش‌های مختلف شرکت پالایش نفت آبادان، بر نقش راهبردی این پالایشگاه در تأمین پایدار سوخت کشور و تسریع در اجرای طرح‌های توسعه‌ای تأکید کرد.",
+          image: "assets/img/2.jpg",
+          link: "#"
+        },
+        {
+          id: 2,
+          tag: "خدمات رفاهی و اجتماعی",
+          title: "داور پالایشگاه آبادان در جمع داوران کشتی امیدهای جهان",
+          desc: "«میلاد قلاوند» داور درجه یک بین‌المللی و از کارکنان شرکت پالایش نفت آبادان، با موافقت فدراسیون کشتی جمهوری اسلامی ایران برای قضاوت در رقابت‌های کشتی قهرمانی امیدهای جهان ۲۰۲۶ انتخاب شد.",
+          image: "assets/img/1.jpg",
+          link: "#"
+        },
+        {
+          id: 3,
+          tag: "روابط عمومی",
+          title: "تشریح ظرفیت‌ها و اقدامات پالایشگاه آبادان در برنامه زنده «مثلث»",
+          desc: "به گزارش روابط عمومی شرکت پالایش نفت آبادان، فردین راشدی در برنامه زنده مثلث صدا و سیمای مرکز آبادان با اشاره به ظرفیت‌ها و اقدامات انجام‌شده در پالایشگاه آبادان، اظهار کرد: این مجموعه در کنار پیشبرد طرح‌های توسعه‌ای و افزایش ظرفیت تولید، در حوزه‌های مختلف از جمله تأمین سوخت، اشتغال نیروهای بومی، مسئولیت‌های اجتماعی و تأمین برق نیز نقش‌آفرینی کرده است.",
+          image: "assets/img/3.jpg",
+          link: "#"
+        }
+      ];
+
+      let newsItems = [];
+      let autoDelaySec = 5;
+      let activePreviewIdx = 0;
+
+      // Data Loading
+      function loadInitialData() {
+        try {
+          const stored = localStorage.getItem('aorc_news_items');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              return parsed;
+            }
+          }
+        } catch (e) {}
+
+        if (window.AORC_NEWS_ITEMS && Array.isArray(window.AORC_NEWS_ITEMS) && window.AORC_NEWS_ITEMS.length > 0) {
+          return JSON.parse(JSON.stringify(window.AORC_NEWS_ITEMS));
+        }
+
+        return JSON.parse(JSON.stringify(DEFAULT_REFINERY_NEWS));
+      }
+
+      function loadInitialDelay() {
+        try {
+          const stored = localStorage.getItem('aorc_slider_config');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            if (parsed && typeof parsed.autoSlideDelay === 'number') {
+              return Math.round(parsed.autoSlideDelay / 1000) || 5;
+            }
+          }
+        } catch (e) {}
+
+        if (window.AORC_CONFIG && window.AORC_CONFIG.autoSlideDelay) {
+          return Math.round(window.AORC_CONFIG.autoSlideDelay / 1000) || 5;
+        }
+
+        return 5;
+      }
+
+      newsItems = loadInitialData();
+      autoDelaySec = loadInitialDelay();
+      document.getElementById('autoSlideDelayInput').value = autoDelaySec;
+
+      const container = document.getElementById('slidesContainer');
+      const badge = document.getElementById('slideCountBadge');
+
+      // Rendering & Preview
+      function renderSlides() {
+        badge.textContent = newsItems.length;
+        container.innerHTML = newsItems.map((item, idx) => `
+          <div class="slide-item-card" data-idx="${idx}">
+            <div class="slide-item-header">
+              <span class="slide-item-number">
+                <span>اسلاید شماره ${idx + 1}</span>
+                ${idx === activePreviewIdx ? '<span style="font-size:0.72rem; background:#e0f2fe; color:#0369a1; padding:0.15rem 0.5rem; border-radius:4px;">در حال پیش‌نمایش</span>' : ''}
+              </span>
+              <div class="slide-item-actions">
+                ${idx > 0 ? `
+                <button type="button" class="slide-mini-btn" data-move-up="${idx}">
+                  <span>⬆</span><span>بالا</span>
+                </button>` : ''}
+                ${idx < newsItems.length - 1 ? `
+                <button type="button" class="slide-mini-btn" data-move-down="${idx}">
+                  <span>⬇</span><span>پایین</span>
+                </button>` : ''}
+                ${newsItems.length > 1 ? `
+                <button type="button" class="slide-mini-btn danger" data-delete="${idx}">
+                  <span>🗑</span><span>حذف</span>
+                </button>` : ''}
+              </div>
+            </div>
+
+            <div class="admin-grid-2">
+              <div class="admin-form-group">
+                <label class="admin-form-label">موضوع یا دسته‌بندی</label>
+                <input type="text" class="admin-input item-tag" value="${escapeHtml(item.tag || '')}" placeholder="مثال: طرح‌های توسعه و تولید">
+              </div>
+              <div class="admin-form-group">
+                <label class="admin-form-label">تصویر اسلاید</label>
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                  <input type="text" class="admin-input item-image" value="${escapeHtml(item.image || '')}" placeholder="مسیر تصویر یا انتخاب مستقیم از سیستم..." style="direction: ltr; font-size: 0.82rem;">
+                  <label class="admin-btn admin-btn-primary" style="cursor:pointer; white-space:nowrap; padding:0.6rem 0.95rem; font-size:0.8rem; margin:0; flex-shrink: 0;" title="انتخاب تصویر از کامپیوتر">
+                    <input type="file" accept="image/*" class="item-file-upload" data-idx="${idx}" style="display:none;">
+                    <span>📁 انتخاب از سیستم</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-form-group">
+              <label class="admin-form-label">تیتر یا عنوان خبر</label>
+              <input type="text" class="admin-input item-title" value="${escapeHtml(item.title || '')}" placeholder="تیتر برجسته خبر">
+            </div>
+
+            <div class="admin-form-group" style="margin-bottom:0.25rem;">
+              <label class="admin-form-label">متن خلاصه خبر</label>
+              <textarea class="admin-textarea item-desc" placeholder="شرح خلاصه اطلاعیه...">${escapeHtml(item.desc || '')}</textarea>
+            </div>
+          </div>
+        `).join('');
+
+        updateLivePreview(activePreviewIdx);
+      }
+
+      function escapeHtml(str) {
+        return (str || '').replace(/"/g, '&quot;');
+      }
+
+      function syncDataFromInputs() {
+        const cards = container.querySelectorAll('.slide-item-card');
+        cards.forEach((card, idx) => {
+          if (newsItems[idx]) {
+            newsItems[idx].tag = card.querySelector('.item-tag').value.trim();
+            newsItems[idx].image = card.querySelector('.item-image').value.trim();
+            newsItems[idx].title = card.querySelector('.item-title').value.trim();
+            newsItems[idx].desc = card.querySelector('.item-desc').value.trim();
+            newsItems[idx].id = idx + 1;
+            newsItems[idx].link = '#';
+          }
+        });
+        const delayVal = parseInt(document.getElementById('autoSlideDelayInput').value, 10);
+        autoDelaySec = isNaN(delayVal) || delayVal < 2 ? 5 : delayVal;
+      }
+
+      function updateLivePreview(idx) {
+        if (!newsItems || newsItems.length === 0) return;
+        if (idx >= newsItems.length) idx = 0;
+        activePreviewIdx = idx;
+
+        const item = newsItems[idx];
+        const liveImg = document.getElementById('liveImg');
+        liveImg.onerror = function() {
+          liveImg.src = 'assets/img/2.jpg';
+        };
+        liveImg.src = item.image || 'assets/img/2.jpg';
+        document.getElementById('liveTag').textContent = item.tag || 'اطلاعیه';
+        document.getElementById('liveTitle').textContent = item.title || 'عنوان اسلاید';
+        document.getElementById('liveDesc').textContent = item.desc || 'توضیحات اسلاید';
+        document.getElementById('previewSlideIndicator').textContent = `اسلاید ${idx + 1} از ${newsItems.length}`;
+      }
+
+      // Event Listeners
+      container.addEventListener('input', function (e) {
+        syncDataFromInputs();
+        const card = e.target.closest('.slide-item-card');
+        if (card) {
+          const idx = parseInt(card.dataset.idx, 10);
+          updateLivePreview(idx);
+        }
+      });
+
+      container.addEventListener('change', function (e) {
+        const fileInput = e.target.closest('.item-file-upload');
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+          const file = fileInput.files[0];
+          const card = fileInput.closest('.slide-item-card');
+          const idx = parseInt(fileInput.dataset.idx, 10);
+
+          if (file.size > 3 * 1024 * 1024) {
+            showToast('حجم تصویر نباید بیشتر از ۳ مگابایت باشد.', true);
+            return;
+          }
+
+          const reader = new FileReader();
+          reader.onload = function (evt) {
+            const dataUrl = evt.target.result;
+            if (card) {
+              card.querySelector('.item-image').value = dataUrl;
+            }
+            if (newsItems[idx]) {
+              newsItems[idx].image = dataUrl;
+            }
+            updateLivePreview(idx);
+            showToast('تصویر با موفقیت بارگذاری گردید.');
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      container.addEventListener('click', function (e) {
+        const upBtn = e.target.closest('[data-move-up]');
+        if (upBtn) {
+          syncDataFromInputs();
+          const idx = parseInt(upBtn.dataset.moveUp, 10);
+          if (idx > 0) {
+            const temp = newsItems[idx];
+            newsItems[idx] = newsItems[idx - 1];
+            newsItems[idx - 1] = temp;
+            activePreviewIdx = idx - 1;
+            renderSlides();
+          }
+          return;
+        }
+
+        const downBtn = e.target.closest('[data-move-down]');
+        if (downBtn) {
+          syncDataFromInputs();
+          const idx = parseInt(downBtn.dataset.moveDown, 10);
+          if (idx < newsItems.length - 1) {
+            const temp = newsItems[idx];
+            newsItems[idx] = newsItems[idx + 1];
+            newsItems[idx + 1] = temp;
+            activePreviewIdx = idx + 1;
+            renderSlides();
+          }
+          return;
+        }
+
+        const delBtn = e.target.closest('[data-delete]');
+        if (delBtn) {
+          syncDataFromInputs();
+          const idx = parseInt(delBtn.dataset.delete, 10);
+          if (confirm(`آیا از حذف اسلاید شماره ${idx + 1} اطمینان دارید؟`)) {
+            newsItems.splice(idx, 1);
+            if (activePreviewIdx >= newsItems.length) activePreviewIdx = Math.max(0, newsItems.length - 1);
+            renderSlides();
+            showToast('اسلاید با موفقیت حذف گردید.');
+          }
+          return;
+        }
+
+        const card = e.target.closest('.slide-item-card');
+        if (card && !e.target.closest('button') && !e.target.closest('input') && !e.target.closest('textarea') && !e.target.closest('label')) {
+          const idx = parseInt(card.dataset.idx, 10);
+          if (activePreviewIdx !== idx) {
+            activePreviewIdx = idx;
+            renderSlides();
+          }
+        }
+      });
+
+      container.addEventListener('focusin', function (e) {
+        const card = e.target.closest('.slide-item-card');
+        if (card) {
+          const idx = parseInt(card.dataset.idx, 10);
+          if (activePreviewIdx !== idx) {
+            activePreviewIdx = idx;
+            updateLivePreview(idx);
+            container.querySelectorAll('.slide-item-card').forEach((c, i) => {
+              const numSpan = c.querySelector('.slide-item-number');
+              if (numSpan) {
+                numSpan.innerHTML = `<span>اسلاید شماره ${i + 1}</span>${i === activePreviewIdx ? '<span style="font-size:0.72rem; background:#e0f2fe; color:#0369a1; padding:0.15rem 0.5rem; border-radius:4px;">در حال پیش‌نمایش</span>' : ''}`;
+              }
+            });
+          }
+        }
+      });
+
+      function addNewSlide() {
+        syncDataFromInputs();
+        const newIdx = newsItems.length + 1;
+        newsItems.push({
+          id: newIdx,
+          tag: "اطلاعیه جدید",
+          title: "عنوان اطلاعیه جدید پالایشگاه",
+          desc: "شرح و متن کامل اطلاعیه جهت نمایش به پرسنل و مراجعین در سامانه ورود یکپارچه.",
+          image: "assets/img/2.jpg",
+          link: "#"
+        });
+        activePreviewIdx = newsItems.length - 1;
+        renderSlides();
+        showToast('اسلاید جدید ایجاد شد.');
+      }
+
+      document.getElementById('btnAddSlide').addEventListener('click', addNewSlide);
+      document.getElementById('btnAddSlideBottom').addEventListener('click', addNewSlide);
+
+      function generateJsContent() {
+        syncDataFromInputs();
+        const configObj = {
+          autoSlideDelay: autoDelaySec * 1000
+        };
+        return `// Configuration\nwindow.AORC_CONFIG = ${JSON.stringify(configObj, null, 2)};\n\n// News Items\nwindow.AORC_NEWS_ITEMS = ${JSON.stringify(newsItems, null, 2)};\n`;
+      }
+
+      function showToast(msg, isError = false) {
+        const toast = document.getElementById('adminToast');
+        const text = document.getElementById('toastText');
+        const icon = document.getElementById('toastIcon');
+
+        text.textContent = msg;
+        icon.textContent = isError ? '✕' : '✔';
+        toast.className = 'toast-msg ' + (isError ? 'error' : 'success') + ' show';
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 4000);
+      }
+
+      // Actions
+      function saveToSystem() {
+        syncDataFromInputs();
+        try {
+          localStorage.setItem('aorc_news_items', JSON.stringify(newsItems));
+          localStorage.setItem('aorc_slider_config', JSON.stringify({ autoSlideDelay: autoDelaySec * 1000 }));
+
+          if (window.BroadcastChannel) {
+            try {
+              const channel = new BroadcastChannel('aorc_news_channel');
+              channel.postMessage({ type: 'NEWS_UPDATED', items: newsItems });
+            } catch (e) {}
+          }
+
+          window.dispatchEvent(new Event('storage'));
+          showToast('✔ تغییرات با موفقیت ذخیره شد و در صفحه لاگین اعمال گردید!');
+        } catch (err) {
+          console.error(err);
+          showToast('خطا در ذخیره‌سازی اطلاعات!', true);
+        }
+      }
+
+      document.getElementById('btnSaveSystem').addEventListener('click', saveToSystem);
+
+      function downloadConfigFile() {
+        const jsCode = generateJsContent();
+        const blob = new Blob([jsCode], { type: 'application/javascript;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'news-config.js';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast('فایل news-config.js آماده شد. آن را در پوشه assets/js/ قرار دهید.');
+      }
+
+      document.getElementById('btnDownloadConfig').addEventListener('click', downloadConfigFile);
+
+      document.getElementById('btnCopyCode').addEventListener('click', function () {
+        const code = generateJsContent();
+        navigator.clipboard.writeText(code).then(() => {
+          showToast('کدهای کامل news-config.js در حافظه کپی شدند.');
+        }).catch(() => {
+          downloadConfigFile();
+        });
+      });
+
+      renderSlides();
+    });
+  </script>
+</body>
+</html>
