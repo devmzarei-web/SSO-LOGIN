@@ -85,6 +85,15 @@ body {
   overflow: hidden;
 }
 
+html:has(body.admin-body),
+body.admin-body {
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  background: #f1f5f9;
+}
+
 .aorc-light-bg {
   position: relative;
   width: 100%;
