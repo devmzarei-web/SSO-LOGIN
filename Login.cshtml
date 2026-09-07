@@ -13,6 +13,24 @@
 </head>
 <body class="aorc-light-bg">
 
+  <!-- Theme Switcher -->
+  <button type="button" class="aorc-theme-toggle" id="aorcThemeToggle" aria-label="تغییر تم شب و روز" title="تغییر تم">
+    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+    </svg>
+    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2"/>
+      <path d="M12 20v2"/>
+      <path d="m4.93 4.93 1.41 1.41"/>
+      <path d="m17.66 17.66 1.41 1.41"/>
+      <path d="M2 12h2"/>
+      <path d="M20 12h2"/>
+      <path d="m6.34 17.66-1.41 1.41"/>
+      <path d="m19.07 4.93-1.41 1.41"/>
+    </svg>
+  </button>
+
   <div class="aorc-ambient-glow aorc-ambient-glow-1"></div>
   <div class="aorc-ambient-glow aorc-ambient-glow-2"></div>
 
@@ -81,6 +99,14 @@
             </svg>
             <span>هشدار: کلید Caps Lock روشن است.</span>
           </div>
+          <div id="keyboardLangAlert" class="aorc-lang-alert">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>توجه: صفحه‌کلید شما فارسی است.</span>
+          </div>
         </div>
 
         <div class="aorc-form-options">
@@ -89,7 +115,7 @@
             <span class="aorc-checkbox-custom"></span>
             <span>مرا به خاطر بسپار</span>
           </label>
-          <a href="#" class="aorc-link-support" onclick="alert('جهت بازیابی رمز عبور با پشتیبانی فناوری اطلاعات تماس حاصل فرمایید.'); return false;">
+          <a href="#" class="aorc-link-support" id="forgotPasswordLink">
             فراموشی رمز عبور؟
           </a>
         </div>
@@ -140,6 +166,46 @@
       </div>
     </aside>
   </main>
+
+  <!-- IT Support Modal -->
+  <div class="aorc-modal-backdrop" id="aorcSupportModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="aorc-modal-card">
+      <button type="button" class="aorc-modal-close" id="aorcModalCloseBtn" aria-label="بستن پنجره">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <div class="aorc-modal-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+      </div>
+      <h2 class="aorc-modal-title" id="modalTitle">راهنمای بازیابی کلمه عبور</h2>
+      <p class="aorc-modal-desc">
+        جهت بازنشانی رمز عبور، رفع مسدودی حساب کاربری یا تغییر اطلاعات ورود، با اداره فناوری اطلاعات و ارتباطات شرکت پالایش نفت آبادان تماس حاصل فرمایید.
+      </p>
+      <div class="aorc-modal-contacts">
+        <a href="tel:06153228080" class="aorc-contact-pill">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          <span>تلفن: ۰۶۱-۵۳۲۲۸۰۸۰</span>
+        </a>
+        <div class="aorc-contact-pill">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"/>
+            <path d="M7 7h10"/>
+            <path d="M7 12h10"/>
+            <path d="M7 17h10"/>
+          </svg>
+          <span>داخلی: ۲۰۸۰ / ۲۱۴۰</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="~/assets/js/news-config.js" asp-append-version="true"></script>
   <script src="~/assets/js/identity.js" asp-append-version="true"></script>

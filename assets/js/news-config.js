@@ -1,6 +1,20 @@
 // Configuration
 window.AORC_CONFIG = {
-  "autoSlideDelay": 5000
+  autoSlideDelay: 5000,
+  apiUrl: "",
+  newsLimit: 4,
+  cacheMinutes: 15,
+  transformApiData: function (rawItem, index) {
+    if (!rawItem) return null;
+    return {
+      id: rawItem.id || rawItem.contentItemId || index + 1,
+      tag: rawItem.category || rawItem.tag || rawItem.department || "اخبار شرکت",
+      title: rawItem.title || rawItem.displayText || "",
+      desc: rawItem.excerpt || rawItem.summary || rawItem.description || (rawItem.body ? rawItem.body.substring(0, 160) + "..." : ""),
+      image: rawItem.imageUrl || rawItem.image || rawItem.mediaUrl || "assets/img/2.jpg",
+      link: rawItem.url || rawItem.link || (rawItem.slug ? "https://abadan-ref.ir/" + rawItem.slug : "#")
+    };
+  }
 };
 
 // News Items

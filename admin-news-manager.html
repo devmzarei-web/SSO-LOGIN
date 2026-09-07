@@ -796,7 +796,10 @@
       function generateJsContent() {
         syncDataFromInputs();
         const configObj = {
-          autoSlideDelay: autoDelaySec * 1000
+          autoSlideDelay: autoDelaySec * 1000,
+          apiUrl: (window.AORC_CONFIG && window.AORC_CONFIG.apiUrl) || "",
+          newsLimit: 4,
+          cacheMinutes: 15
         };
         return `// Configuration\nwindow.AORC_CONFIG = ${JSON.stringify(configObj, null, 2)};\n\n// News Items\nwindow.AORC_NEWS_ITEMS = ${JSON.stringify(newsItems, null, 2)};\n`;
       }
