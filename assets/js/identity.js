@@ -569,6 +569,127 @@ function initAorcIdentity() {
       }
     });
   }
+
+  initAorcParticles();
+}
+
+// Ambient Particles System
+function initAorcParticles() {
+  const canvas = document.getElementById('aorcParticlesCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
+  let mouse = { x: null, y: null, radius: 130 };
+
+  const isMobile = window.innerWidth < 768;
+  const particleCount = isMobile ? 25 : 55;
+  const particles = [];
+
+  class Particle {
+    constructor() {
+      this.reset(true);
+    }
+    reset(init = false) {
+      this.x = init ? Math.random() * width : Math.random() < 0.5 ? 0 : width;
+      this.y = Math.random() * height;
+      this.radius = Math.random() * 2 + 1.2;
+      this.baseAlpha = Math.random() * 0.45 + 0.25;
+      this.alpha = this.baseAlpha;
+      this.vx = (Math.random() - 0.5) * 0.6;
+      this.vy = (Math.random() - 0.5) * 0.6;
+      this.pulseSpeed = Math.random() * 0.02 + 0.01;
+      this.pulseStep = Math.random() * Math.PI;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.pulseStep += this.pulseSpeed;
+      this.alpha = this.baseAlpha + Math.sin(this.pulseStep) * 0.15;
+
+      if (this.x < -10 || this.x > width + 10 || this.y < -10 || this.y > height + 10) {
+        this.reset();
+      }
+
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius) {
+          const force = (mouse.radius - dist) / mouse.radius;
+          const angle = Math.atan2(dy, dx);
+          this.x -= Math.cos(angle) * force * 1.5;
+          this.y -= Math.sin(angle) * force * 1.5;
+        }
+      }
+    }
+    draw(isDark) {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = isDark
+        ? `rgba(56, 189, 248, ${this.alpha})`
+        : `rgba(255, 255, 255, ${this.alpha * 1.2})`;
+      ctx.shadowBlur = isDark ? 8 : 4;
+      ctx.shadowColor = isDark ? '#38bdf8' : '#ffffff';
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new Particle());
+  }
+
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener('mouseleave', () => {
+    mouse.x = null;
+    mouse.y = null;
+  });
+
+  function render() {
+    ctx.clearRect(0, 0, width, height);
+    const isDark = document.body.classList.contains('aorc-dark');
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = 110;
+        if (dist < maxDist) {
+          const lineAlpha = (1 - dist / maxDist) * (isDark ? 0.28 : 0.2);
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = isDark
+            ? `rgba(56, 189, 248, ${lineAlpha})`
+            : `rgba(255, 255, 255, ${lineAlpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw(isDark);
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  render();
 }
 
 // Initialization

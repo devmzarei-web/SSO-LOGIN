@@ -26,9 +26,13 @@
     </svg>
   </button>
 
+  <!-- Ambient Particles -->
+  <canvas id="aorcParticlesCanvas" class="aorc-particles-canvas"></canvas>
+
   <div class="aorc-ambient-glow aorc-ambient-glow-1"></div>
   <div class="aorc-ambient-glow aorc-ambient-glow-2"></div>
 
+  <!-- Logout Card -->
   <main class="aorc-logout-card-clean">
     <div class="aorc-logout-icon-pill">
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -43,42 +47,22 @@
       کاربر گرامی؛ آیا از خروج خود اطمینان دارید؟ با خروج از سامانه احراز هویت متمرکز، نشست کاری شما در <strong>تمامی سامانه‌های متصل به SSO</strong> خاتمه خواهد یافت.
     </p>
 
-    <div class="aorc-sso-systems-wrap">
-      <span class="aorc-sso-systems-label">نشست‌های فعال متصل به این حساب:</span>
-      <div class="aorc-sso-systems-grid">
-        <div class="aorc-system-chip">
-          <span class="aorc-system-chip-dot"></span>
-          <span>پرتال جامع سازمانی</span>
-        </div>
-        <div class="aorc-system-chip">
-          <span class="aorc-system-chip-dot"></span>
-          <span>اتوماسیون اداری چارگون</span>
-        </div>
-        <div class="aorc-system-chip">
-          <span class="aorc-system-chip-dot"></span>
-          <span>سامانه انبار و تدارکات کالا</span>
-        </div>
-        <div class="aorc-system-chip">
-          <span class="aorc-system-chip-dot"></span>
-          <span>پست الکترونیک سازمانی</span>
-        </div>
-      </div>
-    </div>
-
+    <!-- Logout Form -->
     <form id="aorcLogoutForm" method="post" action="login.html">
       <button type="submit" class="aorc-btn-logout-danger" id="aorcLogoutConfirmBtn">
         <span class="aorc-spinner"></span>
-        <span class="aorc-btn-text">خروج از کلیه سامانه‌ها</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
           <polyline points="16 17 21 12 16 7"/>
           <line x1="21" x2="9" y1="12" y2="12"/>
         </svg>
+        <span class="aorc-btn-text">خروج از کلیه سامانه‌ها</span>
       </button>
       <a href="login.html" class="aorc-btn-logout-cancel">انصراف و بازگشت</a>
     </form>
   </main>
 
+  <!-- Scripts -->
   <script src="assets/js/identity.js"></script>
 </body>
 </html>

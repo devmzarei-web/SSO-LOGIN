@@ -57,38 +57,57 @@
 }
 
 /* Base & Layout */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
   direction: rtl;
   text-align: right;
   font-family: 'IRANSansX', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
-  background-color: #0284c7;
+  background:
+    radial-gradient(1200px circle at 85% 15%, #0ea5e9 0%, transparent 60%),
+    radial-gradient(1000px circle at 15% 85%, #0369a1 0%, transparent 55%),
+    linear-gradient(140deg, #0284c7 0%, #0369a1 40%, #075985 80%, #082f49 100%);
   color: var(--aorc-slate-900);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 .aorc-light-bg {
   position: relative;
+  width: 100%;
+  height: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2.5rem 1.5rem;
-  overflow-x: hidden;
-  background: 
-    radial-gradient(1200px circle at 85% 15%, #0ea5e9 0%, transparent 60%),
-    radial-gradient(1000px circle at 15% 85%, #0369a1 0%, transparent 55%),
-    linear-gradient(140deg, #0284c7 0%, #0369a1 40%, #075985 80%, #082f49 100%);
+  padding: 1.25rem 2rem;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* Moving Canvas Particles */
+.aorc-particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .aorc-ambient-glow {
@@ -118,24 +137,30 @@ html, body {
 }
 
 @keyframes floatSlow {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(45px, 40px) scale(1.08); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(45px, 40px) scale(1.08);
+  }
 }
 
 .aorc-split-container {
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 1100px;
-  min-height: 620px;
+  max-width: 1240px;
+  max-height: min(740px, 92vh);
+  height: 100%;
   display: grid;
-  grid-template-columns: 42% 58%;
+  grid-template-columns: 43% 57%;
   background: #ffffff;
   border-radius: var(--aorc-radius-xl);
-  box-shadow: 
-    0 45px 100px -20px rgba(8, 47, 73, 0.5),
-    0 25px 50px -15px rgba(15, 23, 42, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.25);
+  box-shadow:
+    0 45px 100px -20px rgba(8, 47, 73, 0.55),
+    0 25px 50px -15px rgba(15, 23, 42, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
   overflow: hidden;
   animation: containerEntrance 0.6s var(--aorc-ease);
   transition: var(--aorc-transition);
@@ -146,6 +171,7 @@ html, body {
     opacity: 0;
     transform: translateY(18px) scale(0.985);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -154,7 +180,7 @@ html, body {
 
 /* Login Pane */
 .aorc-login-pane {
-  padding: 3rem 2.75rem;
+  padding: 1.75rem 2.85rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -164,7 +190,7 @@ html, body {
 }
 
 .aorc-brand-header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.15rem;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -176,7 +202,7 @@ html, body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
   background: transparent;
   border: none;
   box-shadow: none;
@@ -186,21 +212,21 @@ html, body {
 }
 
 .aorc-logo-img {
-  height: 98px;
+  height: 250px;
   width: auto;
-  max-width: 250px;
+  max-width: 360px;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 6px 14px rgba(15, 23, 42, 0.08));
+  filter: drop-shadow(0 8px 24px rgba(15, 23, 42, 0.15));
   transition: var(--aorc-transition);
 }
 
 .aorc-logo-img:hover {
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 .aorc-company-name {
-  font-size: 1.34rem;
+  font-size: 1.45rem;
   font-weight: 800;
   color: var(--aorc-slate-900);
   letter-spacing: -0.01em;
@@ -209,7 +235,7 @@ html, body {
 }
 
 .aorc-system-title {
-  font-size: 0.94rem;
+  font-size: 1rem;
   color: var(--aorc-slate-500);
   font-weight: 600;
   text-align: center;
@@ -268,12 +294,12 @@ html, body {
 .aorc-form-control:focus {
   border-color: var(--aorc-primary);
   background: #ffffff;
-  box-shadow: 
+  box-shadow:
     0 0 0 4px rgba(2, 132, 199, 0.12),
     0 6px 14px -4px rgba(2, 132, 199, 0.08);
 }
 
-.aorc-form-control:focus ~ .aorc-input-icon {
+.aorc-form-control:focus~.aorc-input-icon {
   color: var(--aorc-primary);
 }
 
@@ -347,12 +373,12 @@ input[type="checkbox"] {
   display: none;
 }
 
-input[type="checkbox"]:checked + .aorc-checkbox-custom {
+input[type="checkbox"]:checked+.aorc-checkbox-custom {
   background: var(--aorc-primary);
   border-color: var(--aorc-primary);
 }
 
-input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
+input[type="checkbox"]:checked+.aorc-checkbox-custom::after {
   content: '';
   width: 5px;
   height: 9px;
@@ -389,7 +415,7 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  box-shadow: 
+  box-shadow:
     0 12px 24px -6px rgba(2, 132, 199, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transition: var(--aorc-transition);
@@ -398,7 +424,7 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
 .aorc-btn-submit:hover {
   background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 16px 28px -6px rgba(2, 132, 199, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
@@ -427,7 +453,9 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
 }
 
 @keyframes aorcSpin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Showcase Pane & Slider */
@@ -479,18 +507,33 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
 }
 
 @keyframes sphereMotion1 {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(25px, 20px) scale(1.05); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(25px, 20px) scale(1.05);
+  }
 }
 
 @keyframes sphereMotion2 {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(-20px, -25px) scale(1.06); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(-20px, -25px) scale(1.06);
+  }
 }
 
 @keyframes sphereMotion3 {
-  0% { transform: translate(0, 0) scale(1); }
-  100% { transform: translate(20px, -15px) scale(0.95); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  100% {
+    transform: translate(20px, -15px) scale(0.95);
+  }
 }
 
 .aorc-showcase-top {
@@ -568,7 +611,7 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
   inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   opacity: 0;
   pointer-events: none;
   transform: translateX(35px);
@@ -583,15 +626,15 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
 
 .aorc-slide-card {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.85rem;
 }
 
 .aorc-slide-visual-box {
   width: 100%;
-  height: 235px;
+  height: 280px;
   border-radius: var(--aorc-radius-lg);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.35);
@@ -610,13 +653,13 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
 }
 
 .aorc-slide-caption-card {
-  margin-top: 1.15rem;
+  margin-top: 0;
   background: rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(24px) saturate(190%);
   -webkit-backdrop-filter: blur(24px) saturate(190%);
   border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: var(--aorc-radius-lg);
-  padding: 1.35rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.25);
   color: #ffffff;
 }
@@ -627,7 +670,7 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
   font-weight: 700;
   color: #fde047;
   margin-bottom: 0.35rem;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .aorc-slide-title {
@@ -636,13 +679,15 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
   color: #ffffff;
   line-height: 1.5;
   margin-bottom: 0.45rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .aorc-slide-desc {
   font-size: 0.88rem;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.7;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .aorc-showcase-footer {
@@ -709,17 +754,17 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 500px;
+  max-width: 560px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.95);
   border-radius: var(--aorc-radius-xl);
-  box-shadow: 
+  box-shadow:
     0 45px 90px -20px rgba(8, 47, 73, 0.45),
     0 20px 40px -15px rgba(15, 23, 42, 0.25),
     0 0 0 1px rgba(255, 255, 255, 0.2);
-  padding: 3rem 2.5rem;
+  padding: 3.25rem 2.85rem;
   text-align: center;
   animation: containerEntrance 0.6s var(--aorc-ease);
 }
@@ -811,38 +856,44 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.85rem;
 }
 
 .aorc-skeleton-visual {
   width: 100%;
-  height: 235px;
+  height: 280px;
   border-radius: var(--aorc-radius-lg);
-  background: linear-gradient(90deg, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.08) 75%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08) 25%, rgba(255, 255, 255, 0.18) 50%, rgba(255, 255, 255, 0.08) 75%);
   background-size: 200% 100%;
   animation: aorcShimmer 1.5s infinite;
 }
 
 .aorc-skeleton-card {
-  margin-top: 1.15rem;
+  margin-top: 0;
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(20px);
   border-radius: var(--aorc-radius-lg);
-  padding: 1.35rem 1.5rem;
+  padding: 1.25rem 1.5rem;
 }
 
 .aorc-skeleton-line {
   height: 12px;
   border-radius: 6px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.1) 75%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.22) 50%, rgba(255, 255, 255, 0.1) 75%);
   background-size: 200% 100%;
   animation: aorcShimmer 1.5s infinite;
   margin-bottom: 0.75rem;
 }
 
 @keyframes aorcShimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Slide Progress Bullets */
@@ -883,8 +934,13 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
 }
 
 @keyframes aorcBulletFill {
-  0% { width: 0%; }
-  100% { width: 100%; }
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
 }
 
 /* Slide Direct Article Link */
@@ -1035,10 +1091,12 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
 }
 
 .aorc-modal-desc {
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   color: var(--aorc-slate-600);
-  line-height: 1.7;
-  margin-bottom: 1.2rem;
+  line-height: 1.85;
+  margin-bottom: 1.35rem;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .aorc-modal-contacts {
@@ -1051,14 +1109,14 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
 .aorc-contact-pill {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.75rem 0.9rem;
+  gap: 0.65rem;
+  padding: 0.85rem 0.95rem;
   background: var(--aorc-slate-50);
   border: 1px solid var(--aorc-slate-200);
   border-radius: var(--aorc-radius-md);
   text-decoration: none;
   color: var(--aorc-slate-700);
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 600;
   transition: var(--aorc-transition);
 }
@@ -1067,6 +1125,26 @@ input[type="checkbox"]:checked + .aorc-checkbox-custom::after {
   border-color: var(--aorc-primary);
   background: var(--aorc-primary-light);
   color: var(--aorc-primary-dark);
+}
+
+.aorc-contact-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  direction: rtl;
+}
+
+.aorc-contact-label {
+  color: var(--aorc-slate-600);
+  font-weight: 600;
+}
+
+.aorc-contact-num {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-weight: 700;
+  color: var(--aorc-slate-900);
+  letter-spacing: 0.4px;
 }
 
 /* Connected Systems on Logout */
@@ -1119,7 +1197,7 @@ body.aorc-dark {
 
 .aorc-dark.aorc-light-bg,
 body.aorc-dark .aorc-light-bg {
-  background: 
+  background:
     radial-gradient(1200px circle at 85% 15%, #0369a1 0%, transparent 60%),
     radial-gradient(1000px circle at 15% 85%, #0f172a 0%, transparent 60%),
     linear-gradient(140deg, #020b18 0%, #06152d 40%, #092347 80%, #030c1a 100%);
@@ -1127,7 +1205,7 @@ body.aorc-dark .aorc-light-bg {
 
 body.aorc-dark .aorc-split-container {
   background: #0a192f;
-  box-shadow: 
+  box-shadow:
     0 45px 100px -20px rgba(0, 0, 0, 0.75),
     0 25px 50px -15px rgba(2, 132, 199, 0.2),
     0 0 0 1px rgba(255, 255, 255, 0.12);
@@ -1221,6 +1299,14 @@ body.aorc-dark .aorc-contact-pill {
   color: #cbd5e1;
 }
 
+body.aorc-dark .aorc-contact-label {
+  color: #94a3b8;
+}
+
+body.aorc-dark .aorc-contact-num {
+  color: #f8fafc;
+}
+
 body.aorc-dark .aorc-logout-card-clean {
   background: rgba(10, 25, 47, 0.95);
   border-color: rgba(255, 255, 255, 0.12);
@@ -1253,31 +1339,60 @@ body.aorc-dark .aorc-btn-logout-cancel:hover {
 }
 
 /* Responsive */
+@media (max-height: 760px),
+(max-width: 960px) {
+
+  html,
+  body {
+    overflow-y: auto;
+    height: auto;
+    min-height: 100%;
+  }
+
+  .aorc-light-bg {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: visible;
+    padding: 2rem 1rem;
+  }
+
+  .aorc-split-container {
+    max-height: none;
+    height: auto;
+  }
+}
+
 @media (max-width: 960px) {
   .aorc-light-bg {
     padding: 1.25rem 0.75rem;
   }
+
   .aorc-split-container {
     grid-template-columns: 1fr;
     max-width: 520px;
     border-radius: 24px;
   }
+
   .aorc-login-pane {
     padding: 2.5rem 1.75rem;
     order: 1;
   }
+
   .aorc-showcase-pane {
     padding: 2rem 1.5rem;
     order: 2;
     min-height: 440px;
   }
+
   .aorc-slide-visual-box {
     height: 190px;
   }
+
   .aorc-sphere-1 {
     width: 180px;
     height: 180px;
   }
+
   .aorc-sphere-2 {
     width: 160px;
     height: 160px;
@@ -1288,35 +1403,45 @@ body.aorc-dark .aorc-btn-logout-cancel:hover {
   .aorc-light-bg {
     padding: 0.75rem 0.5rem;
   }
+
   .aorc-split-container {
     border-radius: 20px;
     box-shadow: 0 20px 40px rgba(8, 47, 73, 0.4);
   }
+
   .aorc-login-pane {
     padding: 2rem 1.25rem;
   }
+
   .aorc-logo-img {
     height: 82px;
   }
+
   .aorc-company-name {
     font-size: 1.2rem;
   }
+
   .aorc-system-title {
     font-size: 0.88rem;
   }
+
   .aorc-form-control {
     padding: 0.8rem 2.6rem 0.8rem 0.85rem;
     font-size: 16px;
   }
+
   .aorc-showcase-pane {
     padding: 1.5rem 1rem;
   }
+
   .aorc-slide-visual-box {
     height: 160px;
   }
+
   .aorc-slide-title {
     font-size: 1.05rem;
   }
+
   .aorc-slide-desc {
     font-size: 0.82rem;
   }
