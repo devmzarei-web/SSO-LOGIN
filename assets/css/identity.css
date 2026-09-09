@@ -108,7 +108,7 @@ body.admin-body {
   background: transparent;
 }
 
-/* Moving Canvas Particles */
+/* Ambient Particles */
 .aorc-particles-canvas {
   position: absolute;
   top: 0;
@@ -239,42 +239,77 @@ body.admin-body {
 .aorc-logo-wrap::before {
   content: '';
   position: absolute;
-  top: 26px;
+  top: 22px;
   left: 50%;
   transform: translateX(-50%);
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(249, 115, 22, 0.36) 0%, rgba(239, 68, 68, 0.16) 50%, transparent 72%);
-  filter: blur(11px);
+  width: 58px;
+  height: 64px;
+  border-radius: 50% 50% 45% 45%;
+  background: radial-gradient(ellipse at 50% 45%, rgba(254, 240, 138, 0.82) 0%, rgba(249, 115, 22, 0.58) 35%, rgba(239, 68, 68, 0.25) 65%, transparent 80%);
+  filter: blur(10px);
   pointer-events: none;
   z-index: 1;
-  opacity: 0.38;
-  animation: aorcFlamePulse 3.8s infinite alternate ease-in-out;
+  opacity: 0.58;
+  animation: aorcFlameFlicker 5.8s infinite ease-in-out;
   transition: var(--aorc-transition);
 }
 
 .aorc-logo-wrap:hover::before {
-  transform: translateX(-50%) scale(1.15);
-  opacity: 0.55;
+  transform: translateX(-50%) scale(1.15, 1.22);
+  opacity: 0.85;
   filter: blur(13px);
 }
 
-@keyframes aorcFlamePulse {
+@keyframes aorcFlameFlicker {
   0% {
-    transform: translateX(-50%) scale(0.96);
-    opacity: 0.30;
-    filter: blur(9px);
+    transform: translateX(-50%) scale(0.78, 0.80);
+    opacity: 0.08;
+    filter: blur(5px);
+  }
+  14% {
+    transform: translateX(-50%) scale(0.82, 0.85);
+    opacity: 0.12;
+    filter: blur(6px);
+  }
+  24% {
+    transform: translateX(-50%) scale(1.08, 1.16);
+    opacity: 0.68;
+    filter: blur(10px);
+  }
+  30% {
+    transform: translateX(-50%) scale(0.95, 1.02);
+    opacity: 0.42;
+    filter: blur(8px);
+  }
+  42% {
+    transform: translateX(-50%) scale(1.18, 1.34);
+    opacity: 0.94;
+    filter: blur(14px);
   }
   50% {
-    transform: translateX(-50%) scale(1.08);
-    opacity: 0.44;
+    transform: translateX(-50%) scale(1.12, 1.28);
+    opacity: 0.82;
+    filter: blur(12px);
+  }
+  58% {
+    transform: translateX(-50%) scale(1.16, 1.32);
+    opacity: 0.88;
     filter: blur(13px);
   }
-  100% {
-    transform: translateX(-50%) scale(1.0);
-    opacity: 0.35;
-    filter: blur(11px);
+  68% {
+    transform: translateX(-50%) scale(0.98, 1.05);
+    opacity: 0.48;
+    filter: blur(9px);
+  }
+  78% {
+    transform: translateX(-50%) scale(0.85, 0.88);
+    opacity: 0.18;
+    filter: blur(6px);
+  }
+  88%, 100% {
+    transform: translateX(-50%) scale(0.78, 0.80);
+    opacity: 0.08;
+    filter: blur(5px);
   }
 }
 
@@ -641,7 +676,7 @@ input[type="checkbox"]:checked+.aorc-checkbox-custom::after {
   }
 }
 
-/* Showcase Pane & Slider */
+/* News Showcase */
 .aorc-showcase-pane {
   position: relative;
   background: linear-gradient(145deg, #0284c7 0%, #0369a1 45%, #075985 100%);
@@ -758,27 +793,6 @@ input[type="checkbox"]:checked+.aorc-checkbox-custom::after {
   box-shadow: 0 0 8px #38bdf8;
 }
 
-.aorc-admin-edit-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.75rem;
-  background: rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: var(--aorc-radius-pill);
-  font-size: 0.72rem;
-  color: #ffffff;
-  cursor: pointer;
-  transition: var(--aorc-transition);
-  font-family: inherit;
-}
-
-.aorc-admin-edit-btn:hover {
-  background: #ffffff;
-  color: var(--aorc-primary);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
 
 .aorc-slider-track-container {
   position: relative;
@@ -952,19 +966,6 @@ input[type="checkbox"]:checked+.aorc-checkbox-custom::after {
   animation: containerEntrance 0.6s var(--aorc-ease);
 }
 
-.aorc-logout-icon-pill {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 1.5rem auto;
-  border-radius: 50%;
-  background: #fee2e2;
-  border: 2px solid #fca5a5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ef4444;
-  box-shadow: 0 12px 24px -6px rgba(239, 68, 68, 0.25);
-}
 
 .aorc-logout-title-clean {
   font-size: 1.35rem;
@@ -1079,7 +1080,7 @@ input[type="checkbox"]:checked+.aorc-checkbox-custom::after {
   }
 }
 
-/* Slide Progress Bullets */
+/* Slide Bullets */
 .aorc-bullet {
   position: relative;
   width: 10px;
@@ -1126,7 +1127,7 @@ input[type="checkbox"]:checked+.aorc-checkbox-custom::after {
   }
 }
 
-/* Slide Direct Article Link */
+/* Direct Article Link */
 .aorc-slide-link {
   display: inline-flex;
   align-items: center;
@@ -1144,7 +1145,7 @@ input[type="checkbox"]:checked+.aorc-checkbox-custom::after {
   transform: translateX(-3px);
 }
 
-/* Theme Toggle Button */
+/* Theme Toggle */
 .aorc-theme-toggle {
   position: absolute;
   top: 1.5rem;
@@ -1219,7 +1220,7 @@ input[type="checkbox"]:checked+.aorc-checkbox-custom::after {
   letter-spacing: 0.03em;
 }
 
-/* Network Offline/Online Toast */
+/* Network Status Toast */
 .aorc-network-toast {
   position: fixed;
   top: 1.5rem;
@@ -1408,49 +1409,7 @@ input[type="checkbox"]:checked+.aorc-checkbox-custom::after {
   letter-spacing: 0.4px;
 }
 
-/* Connected Systems on Logout */
-.aorc-sso-systems-wrap {
-  margin: 1.4rem 0 1.6rem 0;
-  text-align: right;
-}
-
-.aorc-sso-systems-label {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--aorc-slate-500);
-  margin-bottom: 0.6rem;
-  display: block;
-  text-align: center;
-}
-
-.aorc-sso-systems-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-}
-
-.aorc-system-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.35rem 0.75rem;
-  background: var(--aorc-slate-100);
-  border: 1px solid var(--aorc-slate-200);
-  border-radius: var(--aorc-radius-pill);
-  font-size: 0.74rem;
-  color: var(--aorc-slate-700);
-  font-weight: 600;
-}
-
-.aorc-system-chip-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10b981;
-}
-
-/* Dark Theme Adjustments */
+/* Dark Theme */
 body.aorc-dark {
   background-color: #030712;
   color: #f8fafc;
@@ -1568,9 +1527,9 @@ body.aorc-dark .aorc-clock-time {
 }
 
 body.aorc-dark .aorc-logo-wrap::before {
-  background: radial-gradient(circle, rgba(251, 146, 60, 0.44) 0%, rgba(239, 68, 68, 0.22) 50%, transparent 72%);
-  filter: blur(13px);
-  opacity: 0.44;
+  background: radial-gradient(ellipse at 50% 45%, rgba(254, 240, 138, 0.92) 0%, rgba(251, 146, 60, 0.70) 35%, rgba(239, 68, 68, 0.35) 65%, transparent 80%);
+  filter: blur(12px);
+  opacity: 0.68;
 }
 
 body.aorc-dark .aorc-input-clear-btn:hover {
@@ -1629,11 +1588,6 @@ body.aorc-dark .aorc-logout-desc-clean {
   color: #cbd5e1;
 }
 
-body.aorc-dark .aorc-system-chip {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: #e2e8f0;
-}
 
 body.aorc-dark .aorc-btn-logout-cancel {
   background: rgba(255, 255, 255, 0.08);

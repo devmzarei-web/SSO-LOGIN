@@ -707,13 +707,13 @@ function initAorcParticles() {
 
   let width = (canvas.width = window.innerWidth);
   let height = (canvas.height = window.innerHeight);
-  let mouse = { x: null, y: null, radius: 140 };
+  let mouse = { x: null, y: null, radius: 85 };
 
   const isMobile = window.innerWidth < 768;
   const particleCount = isMobile ? 42 : 90;
   const particles = [];
-  const pad = 24;
-  const suctionZone = 95;
+  const pad = 20;
+  const suctionZone = 35;
 
   class Particle {
     constructor() {
@@ -754,21 +754,21 @@ function initAorcParticles() {
 
       if (this.x < suctionZone && this.vx <= 0.05) {
         const pull = (suctionZone - this.x) / suctionZone;
-        this.vx -= pull * 0.75;
+        this.vx -= pull * 0.45;
         this.baseVx = -Math.abs(this.baseVx);
       } else if (this.x > width - suctionZone && this.vx >= -0.05) {
         const pull = (this.x - (width - suctionZone)) / suctionZone;
-        this.vx += pull * 0.75;
+        this.vx += pull * 0.45;
         this.baseVx = Math.abs(this.baseVx);
       }
 
       if (this.y < suctionZone && this.vy <= 0.05) {
         const pull = (suctionZone - this.y) / suctionZone;
-        this.vy -= pull * 0.55;
+        this.vy -= pull * 0.35;
         this.baseVy = -Math.abs(this.baseVy);
       } else if (this.y > height - suctionZone && this.vy >= -0.05) {
         const pull = (this.y - (height - suctionZone)) / suctionZone;
-        this.vy += pull * 0.55;
+        this.vy += pull * 0.35;
         this.baseVy = Math.abs(this.baseVy);
       }
 
@@ -868,8 +868,8 @@ function initAorcParticles() {
         const mdx = particles[i].x - mouse.x;
         const mdy = particles[i].y - mouse.y;
         const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-        if (mdist < 130) {
-          const mAlpha = (1 - mdist / 130) * (isDark ? 0.32 : 0.22);
+        if (mdist < 85) {
+          const mAlpha = (1 - mdist / 85) * (isDark ? 0.32 : 0.22);
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(mouse.x, mouse.y);

@@ -431,10 +431,10 @@
     </div>
   </header>
 
-  <!-- Main layout -->
+  <!-- Main Layout -->
   <main class="admin-main-layout">
     
-    <!-- Left column: Editor list -->
+    <!-- Editor List -->
     <section>
       <div class="admin-card">
         <div class="admin-card-title">
@@ -444,16 +444,14 @@
           </button>
         </div>
 
-        <div id="slidesContainer">
-          <!-- Slide item editors injected here -->
-        </div>
+        <div id="slidesContainer"></div>
 
         <button type="button" class="admin-btn admin-btn-secondary" id="btnAddSlideBottom" style="width: 100%; border-style: dashed; justify-content: center; margin-top: 0.5rem;">
           <span>+ افزودن اسلاید جدید دیگر</span>
         </button>
       </div>
 
-      <!-- Settings card -->
+      <!-- Settings Card -->
       <div class="admin-card">
         <div class="admin-card-title">
           <span>تنظیمات اسلایدر و ابزارهای توسعه</span>
@@ -473,7 +471,7 @@
       </div>
     </section>
 
-    <!-- Right column: Live preview -->
+    <!-- Live Preview -->
     <aside>
       <div class="live-preview-container">
         <div class="admin-card">
@@ -496,16 +494,15 @@
 
   </main>
 
-  <!-- Toast notification -->
+  <!-- Toast Notification -->
   <div class="toast-msg" id="adminToast">
     <span id="toastIcon">✔</span>
     <span id="toastText">عملیات با موفقیت انجام شد.</span>
   </div>
 
-  <!-- Load current configuration file -->
   <script src="assets/js/news-config.js"></script>
 
-  <!-- Admin Manager Logic -->
+  <!-- Scripts -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const DEFAULT_REFINERY_NEWS = [
