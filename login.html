@@ -28,6 +28,25 @@
     </svg>
   </button>
 
+  <!-- Live Shamsi Date & Clock -->
+  <div class="aorc-live-clock-badge" id="aorcLiveClockBadge" aria-label="تاریخ و ساعت زنده">
+    <div class="aorc-clock-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+    </div>
+    <span class="aorc-clock-date" id="aorcClockDate">--</span>
+    <span class="aorc-clock-sep">•</span>
+    <span class="aorc-clock-time" id="aorcClockTime">--:--</span>
+  </div>
+
+  <!-- Network Status Toast -->
+  <div class="aorc-network-toast" id="aorcNetworkToast" role="status" aria-live="polite">
+    <span class="aorc-network-toast-dot"></span>
+    <span id="aorcNetworkToastText">ارتباط با شبکه سازمانی قطع گردید</span>
+  </div>
+
   <!-- Ambient Particles -->
   <canvas id="aorcParticlesCanvas" class="aorc-particles-canvas"></canvas>
 
@@ -51,7 +70,7 @@
 
         <div class="aorc-form-group">
           <label class="aorc-form-label" for="userNameInput">نام کاربری</label>
-          <div class="aorc-input-wrapper">
+          <div class="aorc-input-wrapper aorc-beam-wrapper">
             <input type="text" id="userNameInput" name="UserName" class="aorc-form-control"
               placeholder="نام کاربری یا شماره پرسنلی" required autocomplete="username" autofocus>
             <span class="aorc-input-icon">
@@ -61,12 +80,18 @@
                 <circle cx="12" cy="7" r="4" />
               </svg>
             </span>
+            <button type="button" class="aorc-input-clear-btn" id="userNameClearBtn" aria-label="پاک کردن متن" style="display: none;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
           </div>
         </div>
 
         <div class="aorc-form-group">
           <label class="aorc-form-label" for="passwordInput">کلمه عبور</label>
-          <div class="aorc-input-wrapper">
+          <div class="aorc-input-wrapper aorc-beam-wrapper">
             <input type="password" id="passwordInput" name="Password" class="aorc-form-control" placeholder="••••••••"
               required autocomplete="current-password">
             <span class="aorc-input-icon">
@@ -92,20 +117,22 @@
               </svg>
             </button>
           </div>
-          <div id="capsLockAlert" class="aorc-capslock-alert">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="m18 15-6-6-6 6" />
-            </svg>
-            <span>هشدار: کلید Caps Lock روشن است.</span>
-          </div>
-          <div id="keyboardLangAlert" class="aorc-lang-alert">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="8" x2="12" y2="12"/>
-              <line x1="12" y1="16" x2="12.01" y2="16"/>
-            </svg>
-            <span>توجه: صفحه‌کلید شما فارسی است.</span>
+          <div class="aorc-alerts-container">
+            <div id="capsLockAlert" class="aorc-capslock-alert">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m18 15-6-6-6 6" />
+              </svg>
+              <span>هشدار: کلید Caps Lock روشن است.</span>
+            </div>
+            <div id="keyboardLangAlert" class="aorc-lang-alert">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <span>توجه: صفحه‌کلید شما فارسی است.</span>
+            </div>
           </div>
         </div>
 

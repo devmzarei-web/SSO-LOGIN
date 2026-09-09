@@ -570,7 +570,132 @@ function initAorcIdentity() {
     });
   }
 
+  initLiveClock();
+  initInputClearButton();
+  initSmartEnterNav();
+  initNetworkMonitor();
   initAorcParticles();
+}
+
+// Live Clock Controller
+function initLiveClock() {
+  const clockBadge = document.getElementById('aorcLiveClockBadge');
+  if (!clockBadge) return;
+
+  const dateEl = document.getElementById('aorcClockDate');
+  const timeEl = document.getElementById('aorcClockTime');
+
+  const updateClock = () => {
+    const now = new Date();
+
+    if (dateEl) {
+      try {
+        const dateFormatter = new Intl.DateTimeFormat('fa-IR', {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long'
+        });
+        dateEl.textContent = dateFormatter.format(now);
+      } catch (e) {
+        dateEl.textContent = now.toLocaleDateString('fa-IR');
+      }
+    }
+
+    if (timeEl) {
+      try {
+        const timeFormatter = new Intl.DateTimeFormat('fa-IR', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        });
+        timeEl.textContent = timeFormatter.format(now);
+      } catch (e) {
+        timeEl.textContent = now.toLocaleTimeString('fa-IR');
+      }
+    }
+  };
+
+  updateClock();
+  setInterval(updateClock, 1000);
+}
+
+// Input Clear Controller
+function initInputClearButton() {
+  const userInp = document.getElementById('userNameInput');
+  const clearBtn = document.getElementById('userNameClearBtn');
+
+  if (!userInp || !clearBtn) return;
+
+  const toggleClear = () => {
+    if (userInp.value && userInp.value.trim().length > 0) {
+      clearBtn.style.display = 'flex';
+    } else {
+      clearBtn.style.display = 'none';
+    }
+  };
+
+  userInp.addEventListener('input', toggleClear);
+  userInp.addEventListener('focus', toggleClear);
+
+  clearBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    userInp.value = '';
+    clearBtn.style.display = 'none';
+    userInp.focus();
+    userInp.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+}
+
+// Smart Enter Navigation Controller
+function initSmartEnterNav() {
+  const userInp = document.getElementById('userNameInput');
+  const pwdInp = document.getElementById('passwordInput');
+
+  if (!userInp || !pwdInp) return;
+
+  userInp.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      pwdInp.focus();
+    }
+  });
+}
+
+// Network Status Controller
+function initNetworkMonitor() {
+  const toast = document.getElementById('aorcNetworkToast');
+  if (!toast) return;
+
+  const textEl = document.getElementById('aorcNetworkToastText');
+  let hideTimeout = null;
+
+  const showStatus = (isOnline) => {
+    if (hideTimeout) {
+      clearTimeout(hideTimeout);
+      hideTimeout = null;
+    }
+
+    if (isOnline) {
+      toast.classList.add('is-online');
+      if (textEl) textEl.textContent = 'ارتباط با شبکه سازمانی برقرار گردید';
+      toast.classList.add('show');
+      hideTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3200);
+    } else {
+      toast.classList.remove('is-online');
+      if (textEl) textEl.textContent = 'هشدار: ارتباط شما با شبکه سازمانی قطع گردید';
+      toast.classList.add('show');
+    }
+  };
+
+  if (!navigator.onLine) {
+    showStatus(false);
+  }
+
+  window.addEventListener('offline', () => showStatus(false));
+  window.addEventListener('online', () => showStatus(true));
 }
 
 // Ambient Particles System
@@ -582,47 +707,104 @@ function initAorcParticles() {
 
   let width = (canvas.width = window.innerWidth);
   let height = (canvas.height = window.innerHeight);
-  let mouse = { x: null, y: null, radius: 130 };
+  let mouse = { x: null, y: null, radius: 140 };
 
   const isMobile = window.innerWidth < 768;
-  const particleCount = isMobile ? 25 : 55;
+  const particleCount = isMobile ? 42 : 90;
   const particles = [];
+  const pad = 24;
+  const suctionZone = 95;
 
   class Particle {
     constructor() {
       this.reset(true);
     }
     reset(init = false) {
-      this.x = init ? Math.random() * width : Math.random() < 0.5 ? 0 : width;
+      this.x = init ? Math.random() * width : (Math.random() < 0.5 ? -pad + 2 : width + pad - 2);
       this.y = Math.random() * height;
       this.radius = Math.random() * 2 + 1.2;
       this.baseAlpha = Math.random() * 0.45 + 0.25;
       this.alpha = this.baseAlpha;
-      this.vx = (Math.random() - 0.5) * 0.6;
-      this.vy = (Math.random() - 0.5) * 0.6;
+      const sx = (Math.random() * 0.35 + 0.22) * (Math.random() < 0.5 ? 1 : -1);
+      const sy = (Math.random() * 0.25 + 0.12) * (Math.random() < 0.5 ? 1 : -1);
+      this.baseVx = sx;
+      this.baseVy = sy;
+      this.vx = sx;
+      this.vy = sy;
       this.pulseSpeed = Math.random() * 0.02 + 0.01;
-      this.pulseStep = Math.random() * Math.PI;
+      this.pulseStep = Math.random() * Math.PI * 2;
     }
     update() {
+      if (mouse.x !== null && mouse.y !== null) {
+        const dx = this.x - mouse.x;
+        const dy = this.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < mouse.radius && dist > 0.001) {
+          const inLeftSuction = this.x < suctionZone && this.vx < 0;
+          const inRightSuction = this.x > width - suctionZone && this.vx > 0;
+          if (!inLeftSuction && !inRightSuction) {
+            const force = (mouse.radius - dist) / mouse.radius;
+            const angle = Math.atan2(dy, dx);
+            const push = force * 0.65;
+            this.vx += Math.cos(angle) * push;
+            this.vy += Math.sin(angle) * push;
+          }
+        }
+      }
+
+      if (this.x < suctionZone && this.vx <= 0.05) {
+        const pull = (suctionZone - this.x) / suctionZone;
+        this.vx -= pull * 0.75;
+        this.baseVx = -Math.abs(this.baseVx);
+      } else if (this.x > width - suctionZone && this.vx >= -0.05) {
+        const pull = (this.x - (width - suctionZone)) / suctionZone;
+        this.vx += pull * 0.75;
+        this.baseVx = Math.abs(this.baseVx);
+      }
+
+      if (this.y < suctionZone && this.vy <= 0.05) {
+        const pull = (suctionZone - this.y) / suctionZone;
+        this.vy -= pull * 0.55;
+        this.baseVy = -Math.abs(this.baseVy);
+      } else if (this.y > height - suctionZone && this.vy >= -0.05) {
+        const pull = (this.y - (height - suctionZone)) / suctionZone;
+        this.vy += pull * 0.55;
+        this.baseVy = Math.abs(this.baseVy);
+      }
+
+      const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+      const maxSpeed = 3.6;
+      if (speed > maxSpeed) {
+        this.vx = (this.vx / speed) * maxSpeed;
+        this.vy = (this.vy / speed) * maxSpeed;
+      }
+
+      this.vx = this.vx * 0.96 + this.baseVx * 0.04;
+      this.vy = this.vy * 0.96 + this.baseVy * 0.04;
+
       this.x += this.vx;
       this.y += this.vy;
       this.pulseStep += this.pulseSpeed;
-      this.alpha = this.baseAlpha + Math.sin(this.pulseStep) * 0.15;
+      this.alpha = this.baseAlpha + Math.sin(this.pulseStep) * 0.14;
 
-      if (this.x < -10 || this.x > width + 10 || this.y < -10 || this.y > height + 10) {
-        this.reset();
+      if (this.x < -pad) {
+        this.x = width + pad;
+        this.vx = -Math.abs(this.vx || this.baseVx);
+        this.baseVx = -Math.abs(this.baseVx);
+      } else if (this.x > width + pad) {
+        this.x = -pad;
+        this.vx = Math.abs(this.vx || this.baseVx);
+        this.baseVx = Math.abs(this.baseVx);
       }
 
-      if (mouse.x !== null && mouse.y !== null) {
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < mouse.radius) {
-          const force = (mouse.radius - dist) / mouse.radius;
-          const angle = Math.atan2(dy, dx);
-          this.x -= Math.cos(angle) * force * 1.5;
-          this.y -= Math.sin(angle) * force * 1.5;
-        }
+      if (this.y < -pad) {
+        this.y = height + pad;
+        this.vy = -Math.abs(this.vy || this.baseVy);
+        this.baseVy = -Math.abs(this.baseVy);
+      } else if (this.y > height + pad) {
+        this.y = -pad;
+        this.vy = Math.abs(this.vy || this.baseVy);
+        this.baseVy = Math.abs(this.baseVy);
       }
     }
     draw(isDark) {
@@ -675,6 +857,25 @@ function initAorcParticles() {
           ctx.strokeStyle = isDark
             ? `rgba(56, 189, 248, ${lineAlpha})`
             : `rgba(255, 255, 255, ${lineAlpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+
+    if (mouse.x !== null && mouse.y !== null) {
+      for (let i = 0; i < particles.length; i++) {
+        const mdx = particles[i].x - mouse.x;
+        const mdy = particles[i].y - mouse.y;
+        const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+        if (mdist < 130) {
+          const mAlpha = (1 - mdist / 130) * (isDark ? 0.32 : 0.22);
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = isDark
+            ? `rgba(56, 189, 248, ${mAlpha})`
+            : `rgba(255, 255, 255, ${mAlpha})`;
           ctx.lineWidth = 0.8;
           ctx.stroke();
         }
