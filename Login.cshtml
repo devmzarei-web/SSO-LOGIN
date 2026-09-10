@@ -13,35 +13,36 @@
 </head>
 <body class="aorc-light-bg">
 
-  <!-- Theme Switcher -->
-  <button type="button" class="aorc-theme-toggle" id="aorcThemeToggle" aria-label="تغییر تم شب و روز" title="تغییر تم">
-    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
-    </svg>
-    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-      <circle cx="12" cy="12" r="4"/>
-      <path d="M12 2v2"/>
-      <path d="M12 20v2"/>
-      <path d="m4.93 4.93 1.41 1.41"/>
-      <path d="m17.66 17.66 1.41 1.41"/>
-      <path d="M2 12h2"/>
-      <path d="M20 12h2"/>
-      <path d="m6.34 17.66-1.41 1.41"/>
-      <path d="m19.07 4.93-1.41 1.41"/>
-    </svg>
-  </button>
-
-  <!-- Live Shamsi Date & Clock -->
-  <div class="aorc-live-clock-badge" id="aorcLiveClockBadge" aria-label="تاریخ و ساعت زنده">
-    <div class="aorc-clock-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <polyline points="12 6 12 12 16 14"/>
-      </svg>
+  <!-- Top Controls Bar -->
+  <div class="aorc-top-controls-bar">
+    <div class="aorc-live-clock-badge" id="aorcLiveClockBadge" aria-label="تاریخ و ساعت زنده">
+      <div class="aorc-clock-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <span class="aorc-clock-date" id="aorcClockDate">--</span>
+      <span class="aorc-clock-sep">•</span>
+      <span class="aorc-clock-time" id="aorcClockTime">--:--</span>
     </div>
-    <span class="aorc-clock-date" id="aorcClockDate">--</span>
-    <span class="aorc-clock-sep">•</span>
-    <span class="aorc-clock-time" id="aorcClockTime">--:--</span>
+
+    <button type="button" class="aorc-theme-toggle" id="aorcThemeToggle" aria-label="تغییر تم شب و روز" title="تغییر تم">
+      <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+      </svg>
+      <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2"/>
+        <path d="M12 20v2"/>
+        <path d="m4.93 4.93 1.41 1.41"/>
+        <path d="m17.66 17.66 1.41 1.41"/>
+        <path d="M2 12h2"/>
+        <path d="M20 12h2"/>
+        <path d="m6.34 17.66-1.41 1.41"/>
+        <path d="m19.07 4.93-1.41 1.41"/>
+      </svg>
+    </button>
   </div>
 
   <!-- Network Status Toast -->
@@ -62,10 +63,11 @@
     <section class="aorc-login-pane">
       <div class="aorc-brand-header">
         <div class="aorc-logo-wrap" title="شرکت پالایش نفت آبادان">
-          <img src="~/assets/img/refinery-logo.png" alt="شرکت پالایش نفت آبادان" class="aorc-logo-img">
+          <img src="~/assets/img/refinery-logo-2.png" alt="شرکت پالایش نفت آبادان" class="aorc-logo-img">
         </div>
-        <h1 class="aorc-company-name">شرکت پالایش نفت آبادان</h1>
-        <div class="aorc-system-title">سامانه ورود یکپارچه</div>
+        <div class="aorc-company-name">شرکت پالایش نفت آبادان</div>
+        <div class="aorc-company-motto">یکصد سال افتخار در صنعت نفت ایران</div>
+        <h1 class="aorc-system-title">سامانه ورود یکپارچه</h1>
       </div>
 
       @if (!ViewData.ModelState.IsValid)

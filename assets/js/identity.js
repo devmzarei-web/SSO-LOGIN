@@ -471,7 +471,13 @@ function initAorcIdentity() {
   const loginForm = document.getElementById('aorcLoginForm');
   const submitBtn = document.getElementById('aorcSubmitBtn');
   if (loginForm && submitBtn) {
-    loginForm.addEventListener('submit', function () {
+    let isSubmitting = false;
+    loginForm.addEventListener('submit', function (e) {
+      if (isSubmitting) {
+        e.preventDefault();
+        return false;
+      }
+      isSubmitting = true;
       submitBtn.classList.add('loading');
       const btnText = submitBtn.querySelector('.aorc-btn-text');
       if (btnText) {
@@ -483,7 +489,13 @@ function initAorcIdentity() {
   const logoutForm = document.getElementById('aorcLogoutForm');
   const logoutBtn = document.getElementById('aorcLogoutConfirmBtn');
   if (logoutForm && logoutBtn) {
-    logoutForm.addEventListener('submit', function () {
+    let isLoggingOut = false;
+    logoutForm.addEventListener('submit', function (e) {
+      if (isLoggingOut) {
+        e.preventDefault();
+        return false;
+      }
+      isLoggingOut = true;
       logoutBtn.classList.add('loading');
       const btnText = logoutBtn.querySelector('.aorc-btn-text');
       if (btnText) {
@@ -494,7 +506,16 @@ function initAorcIdentity() {
 
   // Theme Controller
   const themeToggleBtn = document.getElementById('aorcThemeToggle');
+  function isMobileViewport() {
+    return window.innerWidth <= 1024;
+  }
+
   function initTheme() {
+    if (isMobileViewport()) {
+      document.body.classList.add('aorc-dark');
+      updateThemeToggleIcon(true);
+      return;
+    }
     const savedTheme = localStorage.getItem('aorc_theme');
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
@@ -519,11 +540,26 @@ function initAorcIdentity() {
   if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', function (e) {
       e.preventDefault();
+      if (isMobileViewport()) return;
       const isDark = document.body.classList.toggle('aorc-dark');
       localStorage.setItem('aorc_theme', isDark ? 'dark' : 'light');
       updateThemeToggleIcon(isDark);
     });
   }
+
+  window.addEventListener('resize', function () {
+    if (isMobileViewport()) {
+      document.body.classList.add('aorc-dark');
+      updateThemeToggleIcon(true);
+    } else {
+      const savedTheme = localStorage.getItem('aorc_theme');
+      if (savedTheme === 'light') {
+        document.body.classList.remove('aorc-dark');
+        updateThemeToggleIcon(false);
+      }
+    }
+  });
+
   initTheme();
 
   // IT Support Modal
