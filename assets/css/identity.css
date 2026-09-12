@@ -1422,14 +1422,7 @@ body.aorc-dark .aorc-logo-img {
 }
 
 body.aorc-dark .aorc-company-name {
-  color: var(--aorc-refinery-blue, #2d5eb7);
-  -webkit-text-stroke: 1.5px #ffffff;
-  paint-order: stroke fill;
-  text-shadow:
-    -1px -1px 0 #ffffff,
-     1px -1px 0 #ffffff,
-    -1px  1px 0 #ffffff,
-     1px  1px 0 #ffffff;
+  color: #f8fafc;
 }
 
 body.aorc-dark .aorc-company-motto {
@@ -1437,14 +1430,7 @@ body.aorc-dark .aorc-company-motto {
 }
 
 body.aorc-dark .aorc-system-title {
-  color: var(--aorc-refinery-blue, #2d5eb7);
-  -webkit-text-stroke: 1.5px #ffffff;
-  paint-order: stroke fill;
-  text-shadow:
-    -1px -1px 0 #ffffff,
-     1px -1px 0 #ffffff,
-    -1px  1px 0 #ffffff,
-     1px  1px 0 #ffffff;
+  color: #94a3b8;
   border-top-color: rgba(255, 255, 255, 0.12);
 }
 
@@ -1737,9 +1723,16 @@ body.aorc-dark .aorc-btn-logout-cancel:hover {
 
   html,
   body {
+    overflow-x: hidden;
     overflow-y: auto;
-    height: auto;
+    height: 100%;
     min-height: 100%;
+  }
+
+  .aorc-ambient-glow,
+  .aorc-ambient-glow-1,
+  .aorc-ambient-glow-2 {
+    display: none !important;
   }
 
   .aorc-showcase-pane {
@@ -1750,12 +1743,16 @@ body.aorc-dark .aorc-btn-logout-cancel:hover {
     display: none !important;
   }
 
+  .aorc-top-controls-bar {
+    margin: 0 auto 0.65rem auto;
+  }
+
   .aorc-live-clock-badge {
     position: relative;
     top: auto;
     right: auto;
     left: auto;
-    margin: 0 auto 1.15rem auto;
+    margin: 0;
     align-self: center;
     padding: 0.45rem 1rem;
     font-size: 0.8rem;
@@ -1788,14 +1785,14 @@ body.aorc-dark .aorc-btn-logout-cancel:hover {
   }
 
   .aorc-light-bg {
-    padding: 1.5rem 1rem 3rem 1rem !important;
-    min-height: 100vh !important;
+    padding: 0.75rem 1rem !important;
+    min-height: 100dvh !important;
     height: auto !important;
     overflow-y: visible !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     background:
       radial-gradient(circle at 50% 40%, rgba(14, 165, 233, 0.35) 0%, transparent 55%),
       radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.25) 0%, transparent 40%),
@@ -1811,7 +1808,7 @@ body.aorc-dark .aorc-btn-logout-cancel:hover {
     min-height: 0;
     aspect-ratio: auto;
     border-radius: 30px;
-    margin: 1.5rem auto;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -1910,14 +1907,7 @@ body.aorc-dark .aorc-btn-logout-cancel:hover {
 
   .aorc-company-name {
     font-size: 1.02rem;
-    color: var(--aorc-refinery-blue, #2d5eb7);
-    -webkit-text-stroke: 1.5px #ffffff;
-    paint-order: stroke fill;
-    text-shadow:
-      -1px -1px 0 #ffffff,
-       1px -1px 0 #ffffff,
-      -1px  1px 0 #ffffff,
-       1px  1px 0 #ffffff;
+    color: #f8fafc;
   }
 
   .aorc-company-motto {
@@ -1927,17 +1917,11 @@ body.aorc-dark .aorc-btn-logout-cancel:hover {
 
   .aorc-system-title {
     font-size: 0.86rem;
+    color: #94a3b8;
     margin-top: 0.35rem;
     padding-top: 0.35rem;
     margin-bottom: 0;
     border-top-color: rgba(56, 189, 248, 0.25);
-    -webkit-text-stroke: 1.5px #ffffff;
-    paint-order: stroke fill;
-    text-shadow:
-      -1px -1px 0 #ffffff,
-       1px -1px 0 #ffffff,
-      -1px  1px 0 #ffffff,
-       1px  1px 0 #ffffff;
   }
 
   #aorcLoginForm {
@@ -2171,14 +2155,16 @@ body.aorc-dark .aorc-btn-logout-cancel:hover {
 
 
   .aorc-light-bg {
-    padding: 1.25rem 0.65rem;
+    padding: 0.65rem !important;
+    justify-content: center !important;
+    min-height: 100dvh !important;
   }
 
   .aorc-split-container {
     width: 94vw;
     max-width: 380px;
     border-radius: 26px;
-    margin: 1rem auto;
+    margin: 0 auto;
   }
 
   .aorc-login-pane {
